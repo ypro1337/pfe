@@ -22,6 +22,8 @@
                         </thead>
                         <tbody>
                             @foreach ($structures as $structure)
+                                @if ($structure->is_enabled)
+
                                 <tr>
                                     <td>{{ isset($structure->id) ? $structure->id : 'N/A' }}</td>
                                     <td>{{ $structure->name }}</td>
@@ -42,6 +44,7 @@
 
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

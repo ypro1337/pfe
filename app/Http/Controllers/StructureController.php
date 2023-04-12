@@ -36,7 +36,15 @@ class StructureController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'parent_id' => 'nullable|exists:structures,id',
+        ]);
+        $parent=Structure::find($request['parent_id']);
+
         $request['slug']=Str::slug($request->input('name'), "-");
+        $request['position']=++$parent->position;
 
         $structure = Structure::create($request->all());
 
@@ -49,6 +57,10 @@ class StructureController extends Controller
     public function edit(string $slug)
     {
     $structure = $this->find($slug);
+
+    if (!$structure)
+        abort(403,'unexisisting Record');
+
     $structures = Structure::where('slug', '<>', $slug)->get();
     $sieges= Siege::all();
 
@@ -70,10 +82,12 @@ class StructureController extends Controller
         $structure = $this->find($slug);
 
         $structure->name = $request->input('name');
+        $structure->slug=Str::slug($structure->name, "-");
         $structure->description = $request->input('description');
         $structure->parent_id = $request->input('parent_id');
         $structure->is_enabled = $request->input('is_enabled');
         $structure->siege_id = $request->input('siege_id');
+        $structure->position=$this->position($structure);
         $structure->save();
 
        return redirect()->route('structures.index')->with('success', 'structure updated successfully.');
@@ -91,7 +105,14 @@ class StructureController extends Controller
     }
 
     public function find($slug)
-{
-    return Structure::firstwhere('slug', $slug);
-}
+    {
+        return Structure::firstwhere('slug', $slug);
+    }
+
+
+    protected function position (Structure $structure){
+        if($structure->parent===null)
+            return 0 ; //default starting position
+        return ++$structure->parent->position;
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Filiere extends Model
 {
     use HasFactory;
+    protected $fillable = ['designation'];
 
 
     public function Sous_Filieres () : HasMany
