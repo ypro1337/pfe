@@ -26,7 +26,7 @@ class Structure extends Model
         return $this->belongsTo(Structure::class, 'parent_id');
     }
 
-    protected function fillStructure(Structure $structure,$create=false){
-        // copy paste +
-    }
+    // protected function fillStructure(Structure $structure,$create=false){
+    //     // copy paste +
+    // }
 }
