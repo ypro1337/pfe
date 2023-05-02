@@ -2,10 +2,20 @@
 
 
 @section('content')
+
+
+<nav class="navbar navbar-dark bg-primary">
+    <span class="navbar-brand mb-0 h1">Welcome  {{auth()->user()->name}} !</span>
+    <form action="/logout" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+  </nav>
     <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">Structures</div>
+
 
                 <div class="card-body">
                     <a href="{{ route('structures.create') }}" class="btn btn-success mb-3">Create Structure</a>
@@ -22,6 +32,8 @@
                         </thead>
                         <tbody>
                             @foreach ($structures as $structure)
+                                @if ($structure->is_enabled)
+
                                 <tr>
                                     <td>{{ isset($structure->id) ? $structure->id : 'N/A' }}</td>
                                     <td>{{ $structure->name }}</td>
@@ -42,6 +54,7 @@
 
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

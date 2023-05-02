@@ -34,7 +34,7 @@
 
                                 @endif
 
-                                {!! recursiveStructureDropdown($structures, $structure->parent_id) !!}
+                                {!! recursiveStructureDropdown($structures) !!}
                             </select>
                         </div>
 

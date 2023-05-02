@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Structure extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description', 'parent_id','slug','is_enabled','siege_id'];
+    protected $fillable = ['name', 'description', 'parent_id','slug','is_enabled','siege_id','position'];
 
     public function siege () : BelongsTo
     {
@@ -25,4 +25,8 @@ class Structure extends Model
     {
         return $this->belongsTo(Structure::class, 'parent_id');
     }
+
+    // protected function fillStructure(Structure $structure,$create=false){
+    //     // copy paste +
+    // }
 }

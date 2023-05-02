@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Sous_Filiere extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['designation','filiere_id'];
 
 
     public function Filiere () : BelongsTo
